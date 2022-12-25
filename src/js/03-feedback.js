@@ -6,37 +6,31 @@ console.dir(form);
 const formKey = 'feedback-form-state';
 const object = {};
 
+updateInput();
+
 form.addEventListener('input', throttle(onInput, 500));
 form.addEventListener('submit', onSubmit);
 
-updateInput();
-
 function onInput(evt) {
-  evt.preventDefault();
-  //   const a = evt.currentTarget.elements;
-  //   console.log(a);
-  const email = evt.currentTarget.elements.email.value;
-  const message = evt.currentTarget.elements.message.value;
-  object = {
-    email: email,
-    message: message,
-  };
+  object[evt.target.name] = evt.target.value;
   localStorage.setItem(formKey, JSON.stringify(object));
-  //   console.log(object);
 }
 
 function onSubmit(evt) {
-  evt.preventDefault();
-
   console.log(JSON.parse(localStorage.getItem(formKey)));
-  updateInput();
-  form.reset();
-  //   localStorage.removeItem('feedback-form-state');
+  evt.preventDefault();
+  // updateInput();
+  evt.currentTarget.reset();
+  localStorage.removeItem(formKey);
 }
 
 function updateInput() {
-  evt.currentTarget.elements.email.value =
-    localStorage.getItem(formKey.email) || '';
-  evt.currentTarget.elements.message.value =
-    localStorage.getItem(formKey.message) || '';
+  const data = JSON.parse(localStorage.getItem(formKey));
+  console.log(data);
+  const email = document.querySelector('.feedback-form input');
+  const message = document.querySelector('.feedback-form textarea');
+  if (data) {
+    email.value = data.email || '';
+    message.value = data.message || '';
+  }
 }
