@@ -15,6 +15,8 @@ form.addEventListener('input', throttle(onInput, 500));
 form.addEventListener('submit', onSubmit);
 
 function onInput(evt) {
+  const savedObject = JSON.parse(localStorage.getItem(formKey));
+  object = savedObject;
   object[evt.target.name] = evt.target.value;
   localStorage.setItem(formKey, JSON.stringify(object));
 }
