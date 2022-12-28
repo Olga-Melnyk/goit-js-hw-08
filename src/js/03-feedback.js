@@ -35,5 +35,8 @@ function updateInput() {
   if (data) {
     email.value = data.email || '';
     message.value = data.message || '';
+
+    object.email = data.email || '';
+    object.message = data.message || '';
   }
 }
